@@ -1,0 +1,79 @@
+{% extends "./base.html" %}
+
+{% block title %}Bienvenido{% endblock %}
+
+{% block body %}
+<div class="body">
+  <h1>Palabras Aceptadas</h1>
+</div>
+
+<div class="d-flex justify-content-evenly">
+  <div>
+    <h1>Agregar Palabra</h1>
+      <div class="card">
+        <div class="card-body">
+          <form action="/agregarPalabra/" method="POST">{% csrf_token %}
+
+            <div class="form-group">
+              <input type="text" name="Palabra" class="form-control" placeholder="Palabra / Frase" autocomplete="off" minlength="1" maxlength="50" required>
+            </div>
+
+            <br>
+
+            <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" value="True" checked>
+                <label class="btn btn-success" for="btnradio1">Permitir</label>
+              
+                <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off" value="False">
+                <label class="btn btn-danger" for="btnradio3">Prohibir</label>
+            </div>
+
+            <br><br> 
+
+            <div class="form-group">
+              <button type="submit" class="btn btn-info btn-block text-white">Guardar</button>
+            </div>
+
+          </form>
+        </div>
+      </div>
+  </div>
+  <div>
+    <h1>Listado de Palabras</h1>
+    <div>
+      <table class="table table-dark table-striped">
+        <thead>
+          <tr>
+            <th>Palabra</th>
+            <th>Permitida</th>
+            <th>Status</th>
+            <th>Creación</th>
+            <th>Ultima Actualización</th>
+            <th>Fecha Eliminacion</th>
+            <th colspan="2">Opciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for p in Palabras %}
+          <tr>
+            <td>{{p.word}}</td>
+            <td>{{p.allowed}}</td>
+            <td>{{p.status}}</td>
+            <td>{{p.dateCreated}}</td>
+            <td>{{p.lastUpdate}}</td>
+            <td>{{p.dateDeleted}}</td>
+            {% if p.status == "Active" %}
+            <td><a href="/editarPalabra/{{p.id}}" class="btn btn-info">Editar</a></td>
+            <td><a href="/borrarPalabra/{{p.id}}" class="btn btn-danger">Borrar</a></td>
+            {% else %}
+            <td></td>
+            <td></td>
+            {% endif %}
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}

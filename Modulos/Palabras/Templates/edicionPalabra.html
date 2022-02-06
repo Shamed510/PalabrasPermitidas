@@ -1,0 +1,42 @@
+{% extends "./base.html" %}
+
+{% block title %} Edicion {% endblock %}
+
+{% block body %}
+<div class="row">
+  <div class="col-md-4 offset-md-4">
+    <h1>Editar Contacto</h1>
+      <div class="card">
+        <div class="card-body">
+          <form action="/edicionPalabra/" method="POST">{% csrf_token %}
+
+            <div class="form-group">
+              <input type="text" name="txtId" class="form-control" value="{{palabra.id}}"
+              readonly required >
+            </div>
+            <br>
+            <div class="form-group">
+              <input type="text" name="Palabra" class="form-control" value="{{palabra.word}}"
+              minlength="1" maxlength="50" required autocomplete="off">
+            </div>
+
+            <br>
+
+            <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" value="True" checked>
+                <label class="btn btn-success" for="btnradio1">Permitir</label>
+              
+                <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off" value="False">
+                <label class="btn btn-danger" for="btnradio3">Prohibir</label>
+            </div>
+            <br><br>
+            <div class="form-group">
+              <button type="submit" class="btn btn-success btn-block text-white">Guardar</button>
+            </div>
+
+          </form>
+        </div>
+      </div>
+  </div>
+</div>
+{% endblock %}
